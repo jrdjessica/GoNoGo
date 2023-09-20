@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import Login from './Pages/Login'
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -20,14 +21,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        {users.map(item => (
-          <div key={item.id}>
-            <h1>{item.email}</h1>
-            <span>{item.first_name}</span>
-          </div>
-        ))}
-      </header>
+      <Login />
     </div>
   );
 }
