@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
 import json
 
-from .models import User, UserManager
+from .models import User
 from .serializers import UserSerializer
 
 
@@ -33,8 +33,7 @@ def signup_view(request):
             return JsonResponse({'message': 'Email already exists'}, status=400)
 
         # Create a new user
-        user = User.objects.UserManager.create_user(
-            username=email,
+        user = User.objects.create_user(
             email=email,
             password=password,
             first_name=first_name,
