@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+LOGIN_URL = '/'
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'authentication'
+    'authentication',
+    'events'
 ]
 
 REST_FRAMEWORK = {
