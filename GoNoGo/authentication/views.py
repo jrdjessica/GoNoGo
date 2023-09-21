@@ -1,17 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
-from .forms import LogInForm, SignUpForm
-from .models import User
 from django.contrib import messages
 
-
-import json
-
-from .models import User
 from .serializers import UserSerializer
+from .forms import LogInForm, SignUpForm
+from .models import User
 
 
 def home_view(request):

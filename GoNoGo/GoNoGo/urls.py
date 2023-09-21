@@ -17,15 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from authentication import views as auth_views
-from django.views.generic.base import TemplateView
 from events import views as events_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', include('authentication.urls')),
-    path('api/signup/', auth_views.signup_view, name='signup'),
     path("", auth_views.home_view, name="home"),
     path("signup/", auth_views.signup_view, name="sign_up_page"),
+    path('login/', include('authentication.urls')),
+    path('api/signup/', auth_views.signup_view, name='signup'),
     path("dashboard/", events_views.events_dashboard, name="events_dashboard")
 ]
