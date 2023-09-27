@@ -7,6 +7,7 @@ class User(models.Model):
     password = models.CharField(max_length=20)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    user_event = models.ManyToManyField('events.Event')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
