@@ -21,10 +21,10 @@ from events import views as events_views
 
 
 urlpatterns = [
+    path('login/', include('authentication.urls')),
+    path('api/signup/', auth_views.signup_view, name='signup'),
     path('admin/', admin.site.urls),
     path("", auth_views.home_view, name="home"),
     path("signup/", auth_views.signup_view, name="sign_up_page"),
-    path('login/', include('authentication.urls')),
-    path('api/signup/', auth_views.signup_view, name='signup'),
     path("dashboard/", events_views.events_dashboard, name="events_dashboard")
 ]
