@@ -23,23 +23,19 @@ def home_view(request):
     if request.method == 'POST':
         form = LogInForm(request.POST)
         if form.is_valid():
-            print('***************If Valid**********************')
             email = request.POST['email']
             password = request.POST['password']
   
             print(email,password)
             try:
-                print('start trying')
                 user = authenticate(request, username=email, password=password)
 
                 print(user)
                 if user is not None: 
                     form = login(request, user)
-                    print('**************Login***********************')
                     messages.success(request, f' welcome {email} !!')
                     return redirect('/dashboard/')
                 else:
-                    print("user is None~~~~~~~~~~~~~~~~~")
                     messages.info(request, f'account done not exit plz sign in')
                     context['error'] = 'Incorrect password'
             except User.DoesNotExist:

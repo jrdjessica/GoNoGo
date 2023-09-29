@@ -8,7 +8,7 @@ class EventForm(forms.Form):
     location = forms.CharField(max_length=50)
     date = forms.DateField(required=True)
     time = forms.TimeField(required=True)
-    attendee_email = forms.EmailField(required=True)
+    attendees = forms.EmailField(required=True)
     
 
     
