@@ -17,3 +17,10 @@ class Event(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+class Attendance(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    individual_decision = models.BooleanField()
+
+    class Meta:
+        unique_together = ['user', 'event']

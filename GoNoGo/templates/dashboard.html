@@ -2,8 +2,24 @@
 {% block title %}GoNoGo{% endblock %}
 
 {% block content %}
+
 <h1>Event Dashboard</h1>
 <a href="/new_event/">Click to create new event</a>
+{% for event in events_info %}
+<h2>{{ event.title }}</h2>
+<p>Date: {{ event.date }}</p>
+<p>Time: {{ event.time }}</p>
+<p>Final Decision: {{ event.decision }}</p>
+<form action="/decision/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button value="true">Going</button>
+    <button value="false">Not Going</button>
+</form>
+
+<button>Edit Event</button>
+
+{% endfor %}
 
 
 

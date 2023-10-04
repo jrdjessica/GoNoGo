@@ -8,7 +8,23 @@ from django.contrib.auth.models import User
 
 @login_required(login_url='/', redirect_field_name='next')
 def events_dashboard(request):
-    return render(request, "dashboard.html")
+    events_context = {}
+    if hasattr(request.user, '_wrapped'):
+        actual_user = request.user._wrapped
+    else:
+        actual_user = request.user
+    if request.method == 'GET':
+
+        owner_email = User.objects.get(email=actual_user)
+        owner_id = owner_email.id
+        events_info = Event.objects.filter(organizer=owner_id)
+        
+
+
+
+    events_context["events_info"] = events_info
+    print(events_context)
+    return render(request, "dashboard.html", events_context)
 
 
 def new_event(request):
@@ -26,18 +42,22 @@ def new_event(request):
             location = form.cleaned_data.get('location')
             date = form.cleaned_data.get('date')
             time = form.cleaned_data.get('time')
-            attendees = form.cleaned_data.get('attendees')
-            try:
-                attendee = User.objects.get(email=attendees)
-                attendee_id = attendee.id
-            except User.DoesNotExist:
-                attendee_id = None
+            attendee_emails = form.cleaned_data.get('attendees')
+           
+  
 
             event = Event(title=title, content=content, location=location, date=date, time=time, decision = True, organizer=actual_user)
             event.save()
-            event.attendees.add(attendee_id)
+            for email in attendee_emails:
+                try:
+                    attendee = User.objects.get(email=email.strip())
+                    event.attendees.add(attendee)  
+                except User.DoesNotExist:
+
+                    print(f"User with email {email} does not exist.")
+           
             event.save()
-            return redirect('dashboard/') 
+            return redirect('/dashboard/') 
         else:
             context['error'] = 'Invalid form'
     else:
@@ -45,3 +65,8 @@ def new_event(request):
 
     context['form'] = form
     return render(request, "create_event.html", context)
+
+def individual_decision(request):
+    if request.method == 'POST':
+        print("****************************")
+    return redirect('/dashboard/')
