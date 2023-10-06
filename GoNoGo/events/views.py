@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .event_form import EventForm
-from .models import Event
+from .models import Event, Attendance
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 
@@ -17,13 +18,13 @@ def events_dashboard(request):
 
         owner_email = User.objects.get(email=actual_user)
         owner_id = owner_email.id
-        events_info = Event.objects.filter(organizer=owner_id)
         
 
+    events_combined = Event.objects.filter(Q(organizer=owner_id) | Q(attendees=owner_id))
 
 
-    events_context["events_info"] = events_info
-    print(events_context)
+    events_context["events_info"] = events_combined
+   
     return render(request, "dashboard.html", events_context)
 
 
@@ -68,5 +69,21 @@ def new_event(request):
 
 def individual_decision(request):
     if request.method == 'POST':
+        actual_user = request.user
+        owner = User.objects.get(email=actual_user.email)
+        event_id = request.POST.get('event_id', None)
+        event_decision = request.POST.get('btn_value', None)
+        if event_decision == "true":
+            
+            event_decision_bool = True
+        else:
+            event_decision_bool = False
+        event = Event.objects.get(id=event_id)
+
+        attendance = Attendance(user=owner, event=event, individual_decision=event_decision_bool)
+        attendance.save()
+        
+        print("Attendance saved.", '$$$$$$$$$$$$$$$$$$$$')
+
         print("****************************")
     return redirect('/dashboard/')

@@ -12,9 +12,10 @@
 <p>Final Decision: {{ event.decision }}</p>
 <form action="/decision/" method="post">
     {% csrf_token %}
+    <input type="hidden" name="event_id" value="{{ event.id }}">
     {{ form.as_p }}
-    <button value="true">Going</button>
-    <button value="false">Not Going</button>
+    <button name="btn_value" value="true">Going</button>
+    <button name="btn_value" value="false">Not Going</button>
 </form>
 
 <button>Edit Event</button>
