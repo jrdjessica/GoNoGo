@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .event_form import EventForm
 from .models import Event, Attendance
 from django.contrib.auth.models import User
 from django.db.models import Q
+
+
 
 
 
@@ -49,13 +51,12 @@ def new_event(request):
 
             event = Event(title=title, content=content, location=location, date=date, time=time, decision = True, organizer=actual_user)
             event.save()
-            for email in attendee_emails:
+            for attendee in attendee_emails:
                 try:
-                    attendee = User.objects.get(email=email.strip())
-                    event.attendees.add(attendee)  
-                except User.DoesNotExist:
-
-                    print(f"User with email {email} does not exist.")
+                    event.attendees.add(attendee)
+                    
+                except Exception as e:
+                    print(f"An error occurred while adding attendee: {e}")
            
             event.save()
             return redirect('/dashboard/') 
@@ -87,3 +88,21 @@ def individual_decision(request):
 
         print("****************************")
     return redirect('/dashboard/')
+
+def edit(request, id):
+    event_instance = get_object_or_404(Event, id=id)
+
+    if request.method == 'POST':
+        print(EventForm,"&&&&&&&&&&&&&&&&&&&&")
+        form = EventForm(request.POST, instance=event_instance) 
+        if form.is_valid():
+            form.save()
+            return redirect('/dashboard/')  
+
+    else:
+        print(EventForm)
+        form = EventForm(instance=event_instance)  
+
+    context = {'form': form}
+
+    return render(request, "edit.html", context)

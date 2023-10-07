@@ -28,5 +28,6 @@ urlpatterns = [
     path("signup/", auth_views.signup_view, name="sign_up_page"),
     path("dashboard/", events_views.events_dashboard, name="events_dashboard"),
     path("new_event/", events_views.new_event, name="new_event"),
-    path("decision/", events_views.individual_decision, name="individual_decision")
+    path("decision/", events_views.individual_decision, name="individual_decision"),
+    path("dashboard/event/<str:id>/", events_views.edit, name="edit_event")
 ]
