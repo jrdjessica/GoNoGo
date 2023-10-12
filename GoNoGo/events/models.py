@@ -7,6 +7,7 @@ class Event(models.Model):
     content = models.CharField(max_length=500)
     location = models.CharField(max_length=50)
     date = models.DateField()
+    
     time = models.TimeField()
     decision = models.BooleanField()
     attendees = models.ManyToManyField(User)
