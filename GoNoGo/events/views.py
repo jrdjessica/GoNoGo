@@ -4,6 +4,8 @@ from .event_form import EventForm
 from .models import Event, Attendance
 from django.contrib.auth.models import User
 from django.db.models import Q
+from datetime import datetime, timedelta
+import pytz
 
 
 
@@ -47,19 +49,48 @@ def new_event(request):
             time = form.cleaned_data.get('time')
             attendee_emails = form.cleaned_data.get('attendees')
            
+            input_time = datetime.combine(date, time)
+           
+        
+            to_validate_time = datetime.now() + timedelta(days=1)
+            print(to_validate_time)
+            print(datetime.now(), "!!!!!!!!!!!!!!!!")
+            print(to_validate_time < datetime.now())
+          
+
+            
+            if datetime.today() > input_time:
+                form.add_error(None, 'The event time is in the past. Please choose a future date and time.')
+                context['form'] = form
+                return render(request, "create_event.html", context)
+            elif to_validate_time > input_time:
+                print("get called within 24")
+                form.add_error(None, 'The event time is within 24 hours. Please choose a different date and time.')
+                context['form'] = form
+                return render(request, "create_event.html", context)
+            else:
+                event = Event(title=title, content=content, location=location, date=date, time=time, decision = False, organizer=actual_user)
+                event.save()
+                for attendee in attendee_emails:
+                    try:
+                        event.attendees.add(attendee)
+                    
+                    except Exception as e:
+                        print(f"An error occurred while adding attendee: {e}")
+           
+                event.save()
+
+                return redirect('/dashboard/') 
+
+        
+                
+            # if within 24 hrs
+
+
+           
   
 
-            event = Event(title=title, content=content, location=location, date=date, time=time, decision = True, organizer=actual_user)
-            event.save()
-            for attendee in attendee_emails:
-                try:
-                    event.attendees.add(attendee)
-                    
-                except Exception as e:
-                    print(f"An error occurred while adding attendee: {e}")
-           
-            event.save()
-            return redirect('/dashboard/') 
+            
         else:
             context['error'] = 'Invalid form'
     else:
@@ -84,25 +115,34 @@ def individual_decision(request):
         attendance = Attendance(user=owner, event=event, individual_decision=event_decision_bool)
         attendance.save()
         
-        print("Attendance saved.", '$$$$$$$$$$$$$$$$$$$$')
 
-        print("****************************")
     return redirect('/dashboard/')
 
 def edit(request, id):
+    
     event_instance = get_object_or_404(Event, id=id)
 
     if request.method == 'POST':
-        print(EventForm,"&&&&&&&&&&&&&&&&&&&&")
+       
         form = EventForm(request.POST, instance=event_instance) 
         if form.is_valid():
             form.save()
             return redirect('/dashboard/')  
 
     else:
-        print(EventForm)
+        
         form = EventForm(instance=event_instance)  
 
     context = {'form': form}
+    context['id'] = id
+  
 
     return render(request, "edit.html", context)
+
+def delete(request, id):
+    event = Event.objects.get(id=id)
+    event.delete()
+    return redirect('/dashboard/')
+
+def log_out(request):
+    return redirect('/')

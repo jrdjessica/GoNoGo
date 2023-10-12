@@ -4,6 +4,7 @@
 {% block content %}
 
 <h1>Event Dashboard</h1>
+<a href="/log_out/">Log out</a>
 <a href="/new_event/">Click to create new event</a>
 {% for event in events_info %}
 <h2>{{ event.title }}</h2>

@@ -4,10 +4,12 @@
 {% block content %}
 <h1>Event Details</h1>
 <form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Submit</button>
+</form>
+
+
 
 
 

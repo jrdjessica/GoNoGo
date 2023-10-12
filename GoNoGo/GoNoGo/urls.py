@@ -29,5 +29,8 @@ urlpatterns = [
     path("dashboard/", events_views.events_dashboard, name="events_dashboard"),
     path("new_event/", events_views.new_event, name="new_event"),
     path("decision/", events_views.individual_decision, name="individual_decision"),
-    path("dashboard/event/<str:id>/", events_views.edit, name="edit_event")
+    path("dashboard/event/<str:id>/", events_views.edit, name="edit_event"),
+    path("dashboard/event/<str:id>/delete/", events_views.delete, name="delete_event"),
+    path("log_out/", events_views.log_out, name="log_out")
+
 ]
