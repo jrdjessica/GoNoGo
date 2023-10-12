@@ -3,34 +3,16 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from .models import Event
 from django.forms import DateInput
-  
-# creating a form
-class EventForm(forms.ModelForm):
-  
-    # title = forms.CharField(required=True, max_length=20)
-    # content = forms.CharField(max_length=500)
-    # location = forms.CharField(max_length=50)
-    # date = forms.DateField(required=True)
-    # time = forms.TimeField(required=True)
-    # attendees = forms.CharField(required=True)
 
-    # def clean_attendees(self):
-    #     emails = self.cleaned_data['attendees'].split(',')
-    #     for email in emails:
-    #         try:
-    #             validate_email(email.strip())
-    #         except ValidationError:
-    #             raise forms.ValidationError(f"{email} is not a valid email address")
-    #     return emails
+# Event Form
+
+
+class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ['title', 'content', 'location', 'date', 'time', 'attendees']  
+        fields = ['title', 'content', 'location', 'date', 'time', 'attendees']
         widgets = {
             'date': DateInput(attrs={'type': 'date'}),
             'time': DateInput(attrs={'type': 'time'}),
         }
-
-    
-
-
