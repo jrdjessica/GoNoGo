@@ -6,7 +6,7 @@
 <h1>Event Dashboard</h1>
 <a href="/log_out/">Log out</a>
 <a href="/new_event/">Click to create new event</a>
-{% for event in events_info %}
+{% for event, within_24_hours in events_info %}
 <h2>{{ event.title }}</h2>
 <p>Date: {{ event.date }}</p>
 <p>Time: {{ event.time }}</p>
@@ -19,9 +19,14 @@
     <button name="btn_value" value="false">Not Going</button>
 </form>
 
+{% if not within_24_hours %}
 <a href="/dashboard/event/{{ event.id }}/">
     Edit Event
 </a>
+{% else %}
+<button disabled>Edit Event</button>
+{% endif %}
+
 
 {% endfor %}
 

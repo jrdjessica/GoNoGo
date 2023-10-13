@@ -11,6 +11,8 @@ from datetime import datetime, timedelta
 def events_dashboard(request):
 
     events_context = {}
+    now = datetime.now()
+    within_24_hours = []
 
     if hasattr(request.user, '_wrapped'):
         actual_user = request.user._wrapped
@@ -22,10 +24,16 @@ def events_dashboard(request):
         owner_email = User.objects.get(email=actual_user)
         owner_id = owner_email.id
 
-    events_combined = Event.objects.filter(
-        Q(organizer=owner_id) | Q(attendees=owner_id))
 
-    events_context["events_info"] = events_combined
+    events_combined = Event.objects.filter(
+        Q(organizer=owner_id) | Q(attendees=owner_id)).distinct()
+    for event in events_combined:
+        event_time_date = datetime.combine(event.date, event.time)
+        if now + timedelta(hours=24) > event_time_date > now:
+            within_24_hours.append(True)
+        else:
+            within_24_hours.append(False)
+    events_context["events_info"] = zip(events_combined, within_24_hours)
 
     return render(request, "dashboard.html", events_context)
 
