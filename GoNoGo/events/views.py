@@ -5,6 +5,7 @@ from .models import Event, Attendance
 from django.contrib.auth.models import User
 from django.db.models import Q
 from datetime import datetime, timedelta
+import random
 
 
 @login_required(login_url='/', redirect_field_name='next')
@@ -122,10 +123,35 @@ def individual_decision(request):
             event_decision_bool = False
 
         event = Event.objects.get(id=event_id)
+        
+        attendance, created = Attendance.objects.get_or_create(
+            user=owner, event=event, defaults={'individual_decision': event_decision_bool})
+   
+        if not created:
+            attendance.individual_decision = event_decision_bool
+            attendance.save()
 
-        attendance = Attendance(user=owner, event=event,
-                                individual_decision=event_decision_bool)
-        attendance.save()
+        going_attendees = Attendance.objects.filter(
+            event_id=event_id, individual_decision=True).count()
+        num_total_attendees = event.attendees.count()
+        ratio = going_attendees / (num_total_attendees+1)
+        rounded_ratio = round(ratio, 2)
+        if rounded_ratio> 0.5:
+            event.decision = True
+        elif rounded_ratio == 0.5:
+            event.decision = random.choice([True, False])
+        else:
+            event.decision = False
+        
+        print(num_total_attendees, event.decision)
+
+        
+     
+
+        
+        
+
+        
 
     return redirect('/dashboard/')
 
@@ -151,13 +177,13 @@ def edit(request, id):
     return render(request, "edit.html", context)
 
 
-def delete(id):
+def delete(request, id):
     event = Event.objects.get(id=id)
     event.delete()
     return redirect('/dashboard/')
 
 
-def log_out():
+def log_out(request):
     return redirect('/')
 
 def past_events(request):
