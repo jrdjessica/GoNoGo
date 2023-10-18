@@ -29,6 +29,9 @@ def events_dashboard(request):
 
     events_combined = Event.objects.filter(
         Q(organizer=owner_id) | Q(attendees=owner_id)).distinct()
+    
+    events_combined = sorted(events_combined, key=lambda event: (event.date, event.time))
+
     for event in events_combined:
         event_time_date = datetime.combine(event.date, event.time)
         if now + timedelta(hours=24) > event_time_date > now:

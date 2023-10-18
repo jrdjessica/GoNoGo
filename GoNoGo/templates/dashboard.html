@@ -5,7 +5,7 @@
 
 <h1>Event Dashboard</h1>
 <a href="/log_out/">Log out</a>
-<a href="/new_event/">Click to create new event</a>
+<a href="/new_event/" id="create-btn">Click to create new event</a>
 <a href="/past_events/">Click to check past events</a>
 {% for event, within_24_hours, past_events in events_info %}
 {% if not past_events%}
@@ -26,13 +26,15 @@
     <button name="btn_value" value="false">Not Going</button>
 </form>
 {% else %}
-<button disabled>Edit Event</button>
+<button disabled id="edit-btn">Edit Event</button>
 <p>Final Decision: {{ event.decision }}</p>
 {% endif %}
 
 {% endif %}
 {% endfor %}
 
+{% load static %}
+<script src="{% static 'js/main.js' %}"></script>
 
 
 {% endblock content %}
