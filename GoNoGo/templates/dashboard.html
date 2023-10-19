@@ -5,7 +5,7 @@
 
 <h1>Event Dashboard</h1>
 <a href="/log_out/">Log out</a>
-<a href="/new_event/" id="create-btn">Click to create new event</a>
+<button id="new-event-btn">Click to create new event</button>
 <a href="/past_events/">Click to check past events</a>
 {% for event, within_24_hours, past_events in events_info %}
 {% if not past_events%}
@@ -32,6 +32,14 @@
 
 {% endif %}
 {% endfor %}
+
+
+<div id="new-event-modal" style="display:none;">
+    <h2>Create New Event</h2>
+    <div id="new-event-modal-content"></div>
+
+</div>
+
 
 {% load static %}
 <script src="{% static 'js/main.js' %}"></script>
