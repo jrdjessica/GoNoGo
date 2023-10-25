@@ -2,13 +2,57 @@
 {% block title %}GoNoGo{% endblock %}
 
 {% block content %}
-<h1>Log In</h1>
-<form action="" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Log In</button>
-</form>
+<div class="log-in-page">
 
 
-<a href="/signup">Create new account</a>
+  <h1><span class="icon"><i class="fi fi-rr-bookmark"></i></span>GoNoGo</h1>
+
+
+  <div class="content">
+    <div class="description">
+
+      <span class="animate__animated animate__fadeInTopRight">Welcome to GoNoGo!</span>
+      <br>
+      <br>
+      <span class="line">Have you ever felt obligated to attend an event, all while wondering if everyone else will show
+        up?</span>
+      <br>
+      Have you ever said yes to an event you didn't want to attend?
+      You found GoNoGo!
+      <br>
+      <br>
+      Once you create an event, you can invite your friends to a decision-making process free from social pressure.
+      When invited, you have the choice to attend or skip out <strong>anonymously</strong>.
+      <br>
+      <br>
+      Here's the kicker: if the majority decides to go, the event is a go! But if the majority declines, we'll
+      automatically
+      cancel the event.
+      <br>
+      Join us today and take the hassle out of event planning!
+    </div>
+
+
+    <div class="log-in-form">
+      <h2>Log In</h2>
+      <form action="" method="post">
+        {% csrf_token %}
+        <label for="{{ form.email.id_for_label }}">Email:</label><br>
+        {{ form.email }}<br>
+
+        <label for="{{ form.password.id_for_label }}">Password:</label><br>
+        {{ form.password }}<br>
+
+        <button type="submit">Log In</button>
+      </form>
+      <p>New User? <a href="/signup">Sign Up</a></p>
+
+    </div>
+
+
+  </div>
+</div>
+
+
+
 {% endblock content %}
