@@ -118,3 +118,110 @@ body {
     color: #fefefe;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+.dashboard-page {
+    background-color: #e8e4e6;
+    min-height: 100vh;
+}
+
+.dashboard-page h1 {
+    font-size: 50px;
+    text-align: center;
+}
+
+.dashboard-page #nav-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 10px 15px 10px;
+    background-color: #abd1c6;
+}
+
+.dashboard-page .nav-link {
+    text-decoration: none;
+    color: black;
+}
+
+.dashboard-page .nav-link:hover {
+    color: #004643;
+}
+
+.dashboard-page .dashboard-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-page #new-event-btn {
+    margin-bottom: 10px;
+    border: none;
+    width: 20%;
+    padding: 10px 32px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f9bc60;
+    color: #fefefe;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-page h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dashboard-page p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dashboard-page #edit-event {
+    text-decoration: none;
+    background-color: #004643;
+    color: white;
+    padding: 3px 7px 3px 7px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+.dashboard-page #edit-event:hover {
+    background-color: #ffc6c7;
+    color: black;
+}
+
+.dashboard-page #going-btn {
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+.dashboard-page .going-btns {
+    border: none;
+    width: 100%;
+    padding: 10px 32px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f9bc60;
+    color: #fefefe;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-page .event-details {
+    width: 50%;
+    background-color: #abd1c6;
+    border: #001e1d 1px solid;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0px 15px 10px;
+}
+
+.dashboard-page .event-btns {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-right: 10px;
+    width: 100%;
+}
+
+.dashboard-page .event-info {
+    width: 50%;
+}
