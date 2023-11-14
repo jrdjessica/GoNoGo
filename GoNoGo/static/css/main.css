@@ -80,13 +80,47 @@ body {
     position: relative;
     color: #001e1d;
     font-size: 20px;
-
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
 }
 
+.logo {
+    object-fit: cover;
+    max-height: 100%;
+}
 
+.sign-up-page {
+    display: flex;
+    gap: 10%;
+    background-color: #e8e4e6;
+    min-height: 100vh;
+}
 
+.sign-up-form {
+    padding-top: 5%;
+    width: 50%;
+}
+
+.sign-up-form input {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 50%;
+}
+
+.sign-up-form button {
+    margin-top: 10px;
+    border: none;
+    width: 50%;
+    padding: 10px 32px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f9bc60;
+    color: #fefefe;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
 
 .log-in-form {
     padding-top: 40px;
