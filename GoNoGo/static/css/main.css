@@ -259,3 +259,8 @@ body {
 .dashboard-page .event-info {
     width: 50%;
 }
+
+.event-details-form {
+    text-align: left;
+    padding-left: 30%;
+}
