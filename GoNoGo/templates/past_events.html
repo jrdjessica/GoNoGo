@@ -2,16 +2,26 @@
 {% block title %}GoNoGo{% endblock %}
 
 {% block content %}
-<h1>Past Events</h1>
-{% for event, past_events in events_info %}
-{% if past_events %}
-<h2>{{ event.title }}</h2>
-<p>Date: {{ event.date }}</p>
-<p>Time: {{ event.time }}</p>
-<p>Final Decision: {{ event.decision }}</p>
-{% endif %}
+<div class="past_events_page">
+    <div class="nav-bar">
+        <a href="/dashboard/" class="nav-link">Event Dashboard</a>
+        <a href="/log_out/" class="nav-link">Log out</a>
+
+    </div>
+    <div class="past_events_details">
+        <h1>Past Events</h1>
+        {% for event, past_events in events_info %}
+        {% if past_events %}
+        <div class="event-details past_events_content">
+            <h2><i>{{ event.title }}</i></h2>
+            <p>Date: {{ event.date }}</p>
+            <p>Time: {{ event.time }}</p>
+            <p>Final Decision: {{ event.decision }}</p>
+            {% endif %}
+        </div>
 
 
-
-{% endfor %}
+        {% endfor %}
+    </div>
+</div>
 {% endblock content %}
