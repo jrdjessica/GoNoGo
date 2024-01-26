@@ -26,11 +26,11 @@ def events_dashboard(request):
         owner_email = User.objects.get(email=actual_user)
         owner_id = owner_email.id
 
-
     events_combined = Event.objects.filter(
         Q(organizer=owner_id) | Q(attendees=owner_id)).distinct()
-    
-    events_combined = sorted(events_combined, key=lambda event: (event.date, event.time))
+
+    events_combined = sorted(
+        events_combined, key=lambda event: (event.date, event.time))
 
     for event in events_combined:
         event_time_date = datetime.combine(event.date, event.time)
@@ -45,7 +45,8 @@ def events_dashboard(request):
         else:
             past_events.append(False)
 
-    events_context["events_info"] = zip(events_combined, within_24_hours, past_events)
+    events_context["events_info"] = zip(
+        events_combined, within_24_hours, past_events)
 
     return render(request, "dashboard.html", events_context)
 
@@ -126,10 +127,10 @@ def individual_decision(request):
             event_decision_bool = False
 
         event = Event.objects.get(id=event_id)
-        
+
         attendance, created = Attendance.objects.get_or_create(
             user=owner, event=event, defaults={'individual_decision': event_decision_bool})
-   
+
         if not created:
             attendance.individual_decision = event_decision_bool
             attendance.save()
@@ -139,22 +140,14 @@ def individual_decision(request):
         num_total_attendees = event.attendees.count()
         ratio = going_attendees / (num_total_attendees+1)
         rounded_ratio = round(ratio, 2)
-        if rounded_ratio> 0.5:
+        if rounded_ratio > 0.5:
             event.decision = True
         elif rounded_ratio == 0.5:
             event.decision = random.choice([True, False])
         else:
             event.decision = False
-        
+
         print(num_total_attendees, event.decision)
-
-        
-     
-
-        
-        
-
-        
 
     return redirect('/dashboard/')
 
@@ -189,15 +182,15 @@ def delete(request, id):
 def log_out(request):
     return redirect('/')
 
+
 def past_events(request):
     events_context = {}
     now = datetime.now()
     past_events = []
- 
-  
+
     if request.method == 'GET':
         actual_user = request.user
-        owner_email = User.objects.get(email= actual_user.email)
+        owner_email = User.objects.get(email=actual_user.email)
 
         owner_id = owner_email.id
     events_combined = Event.objects.filter(
@@ -211,5 +204,3 @@ def past_events(request):
     events_context["events_info"] = zip(events_combined, past_events)
 
     return render(request, "past_events.html", events_context)
-    
-

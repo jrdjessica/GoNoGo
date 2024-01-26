@@ -12,6 +12,7 @@
         <button id="new-event-btn">Click to create new event</button>
         <div><em>Just make sure to decide at least 24 hours before the event begins.</em></div>
         <br>
+        <a href="/chatbot/" target="_blank">Chatbot</a>
         {% for event, within_24_hours, past_events in events_info %}
         {% if not past_events%}
         <div class="event-details">
@@ -22,7 +23,7 @@
 
 
                 {% if not within_24_hours %}
-                <a href="/dashboard/event/{{ event.id }}/" id="edit-event">
+                <a href="/dashboard/event/{{ event.id }}/" id="edit-chatbot/event">
                     Edit Event
                 </a>
             </div>

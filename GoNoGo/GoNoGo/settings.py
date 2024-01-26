@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'authentication',
-    'events'
+    'events',
+    'chatbot'
 ]
 
 REST_FRAMEWORK = {
